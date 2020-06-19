@@ -31,6 +31,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 # to prefer static libraries over dynamic use
 set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
 find_package(HiSiliconSDK REQUIRED)
+message("${HiSiliconSDK_VERSION}")
 include_directories(${HISILICON_SDK_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${HISILICON_SDK_LIBRARIES})
 
