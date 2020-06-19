@@ -60,6 +60,7 @@ foreach(LIB ${CORE_LIBS_NAMES})
 endforeach(LIB)
 
 set(SENSOR_LIBS_NAMES
+    sns_imx222
     sns_imx327
     sns_imx307
     sns_imx307_2l

@@ -24,7 +24,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE common)
 # for EV200/EV300
 target_compile_definitions(${PROJECT_NAME} PUBLIC SENSOR0_TYPE=SONY_IMX307_2L_MIPI_2M_30FPS_12BIT)
 # for CV300
-target_compile_definitions(${PROJECT_NAME} PUBLIC SENSOR_TYPE=SONY_IMX290_MIPI_1080P_30FPS)
+#target_compile_definitions(${PROJECT_NAME} PUBLIC SENSOR_TYPE=SONY_IMX290_MIPI_1080P_30FPS)
+# for EV200
+target_compile_definitions(${PROJECT_NAME} PUBLIC SENSOR_TYPE=SONY_IMX222_DC_1080P_30FPS)
+target_compile_definitions(${PROJECT_NAME} PUBLIC CHIP_ID=CHIP_HI3516C_V200)
+# for g_u32BlkCnt constaint
+target_compile_definitions(${PROJECT_NAME} PUBLIC hi3516cv200)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
