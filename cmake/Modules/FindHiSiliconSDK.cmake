@@ -17,11 +17,13 @@ set(CORE_LIBS_NAMES
     mpi
     _hiae
     isp
-    _hidehaze
+    _hidehaze       # Remove haze
+    _hidefog        # Remove fog
     _hidrc
     _hildci
-    _hiawb
-    _hiir_auto
+    _hiawb          # Auto white balance
+    _hiir_auto      # IR Cut auto
+    _hiaf           # Auto focus
     upvqe
     securec
     dnvqe

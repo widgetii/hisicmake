@@ -21,10 +21,15 @@ add_executable(${PROJECT_NAME}
     ${SOURCES}
 )
 target_include_directories(${PROJECT_NAME} PRIVATE common)
+# for EV200/EV300
 target_compile_definitions(${PROJECT_NAME} PUBLIC SENSOR0_TYPE=SONY_IMX307_2L_MIPI_2M_30FPS_12BIT)
+# for CV300
+target_compile_definitions(${PROJECT_NAME} PUBLIC SENSOR_TYPE=SONY_IMX290_MIPI_1080P_30FPS)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
+# to prefer static libraries over dynamic use
+set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
 find_package(HiSiliconSDK REQUIRED)
 include_directories(${HISILICON_SDK_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${HISILICON_SDK_LIBRARIES})
