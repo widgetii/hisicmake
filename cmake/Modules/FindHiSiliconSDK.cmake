@@ -5,28 +5,44 @@
 #  HISILICON_SDK_LIBRARIES - The libraries needed to use HiSilicon SDK
 #  HISILICON_SDK_DEFINITIONS - Compiler switches required for using HiSilicon SDK
 
-find_path(HISILICON_SDK_ROOT hi_common.h
+find_path(HISILICON_SDK_INCLUDE_DIRS hi_common.h
     HINTS ENV HISILICON_SDK_DIR
     PATH_SUFFIXES mpp/include
     REQUIRED
 )
 
-set(HISILICON_SDK_INCLUDE_DIRS ${HISILICON_SDK_ROOT})
+execute_process(COMMAND ${CMAKE_MODULE_PATH}/get_hisisdk_ver.py $ENV{HISILICON_SDK_DIR}
+    OUTPUT_VARIABLE RAW_SDK_VER
+)
+if(RAW_SDK_VER)
+    list(GET RAW_SDK_VER 0 HISILICON_SDK_FAMILY)
+    list(GET RAW_SDK_VER 1 HISILICON_SDK_VERSION_MAJOR)
+    list(GET RAW_SDK_VER 2 HISILICON_SDK_VERSION_MINOR)
+    list(GET RAW_SDK_VER 3 HISILICON_SDK_VERSION_PATCH)
+    list(GET RAW_SDK_VER 4 HISILICON_SDK_VERSION_TWEAK)
+    set(HISILICON_SDK_VERSION_COUNT 4)
+    list(GET RAW_SDK_VER 6 HISILICON_SDK_VERSION_DATE)
+    list(SUBLIST RAW_SDK_VER 1 5 SDK_ONLY_VER)
+    list(JOIN SDK_ONLY_VER "." HISILICON_SDK_VERSION)
+    message("Detected ${HISILICON_SDK_FAMILY} SDK version ${HISILICON_SDK_VERSION}")
+    set(HISILICON_SDK_FOUND 1)
+endif()
 
 set(CORE_LIBS_NAMES
     mpi
-    _hiae
-    isp
+    _hiae           # Automatic exposure
+    isp             # Image signal processor
+    ive             # Intelligent video engine
     _hidehaze       # Remove haze
     _hidefog        # Remove fog
-    _hidrc
-    _hildci
-    _hiawb          # Auto white balance
+    _hidrc          # Dynamic range compression
+    _hildci         # LDCI/Sharpen
+    _hiawb          # Automatic white balance
     _hiir_auto      # IR Cut auto
-    _hiaf           # Auto focus
-    upvqe
-    securec
-    dnvqe
+    _hiaf           # Automatic focus
+    upvqe           # Up voice quality enhancement
+    dnvqe           # Down voice quality enhancement
+    securec         # Secure C functions
     VoiceEngine
 )
 
@@ -74,4 +90,4 @@ endforeach(LIB)
 set(HISILICON_SDK_LIBRARIES
     ${CORE_LIBS}
     ${SENSOR_LIBS}
-    )
+)
